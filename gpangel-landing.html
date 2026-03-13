@@ -1,0 +1,943 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>GPAngel — Envoyer des colis vers l'Afrique, en toute confiance</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --green:     #1A3D2B;
+    --green-mid: #2E6B48;
+    --green-lt:  #D6EBD9;
+    --gold:      #C9922A;
+    --gold-lt:   #F9EDD3;
+    --terra:     #C44C1E;
+    --cream:     #FAF6EF;
+    --ink:       #1C1612;
+    --ink-mid:   #4A4035;
+    --ink-lt:    #9E8E78;
+    --white:     #FFFFFF;
+    --r:         12px;
+    --r-lg:      20px;
+  }
+
+  body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.2rem 6vw;
+    position: sticky;
+    top: 0;
+    background: rgba(250, 246, 239, 0.92);
+    backdrop-filter: blur(12px);
+    z-index: 100;
+    border-bottom: 1px solid rgba(201,146,42,.15);
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+  }
+
+  .logo-icon {
+    width: 36px; height: 36px;
+    background: var(--green);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  .logo-icon svg { width: 20px; height: 20px; fill: var(--gold); }
+
+  .logo-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    font-weight: 900;
+    color: var(--green);
+    letter-spacing: -0.02em;
+  }
+
+  .logo-text span { color: var(--gold); }
+
+  nav ul {
+    display: flex; gap: 2rem; list-style: none;
+  }
+  nav ul a {
+    font-size: .9rem; font-weight: 500;
+    color: var(--ink-mid); text-decoration: none;
+    transition: color .2s;
+  }
+  nav ul a:hover { color: var(--green); }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: .65rem 1.4rem;
+    border-radius: var(--r);
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: .9rem;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    transition: transform .15s, box-shadow .15s;
+    border: none;
+  }
+  .btn:active { transform: scale(.97); }
+
+  .btn-primary {
+    background: var(--green);
+    color: var(--white);
+    box-shadow: 0 4px 18px rgba(26,61,43,.25);
+  }
+  .btn-primary:hover { box-shadow: 0 6px 24px rgba(26,61,43,.35); transform: translateY(-1px); }
+
+  .btn-gold {
+    background: var(--gold);
+    color: var(--white);
+    box-shadow: 0 4px 18px rgba(201,146,42,.3);
+  }
+  .btn-gold:hover { box-shadow: 0 6px 24px rgba(201,146,42,.4); transform: translateY(-1px); }
+
+  .btn-outline {
+    background: transparent;
+    color: var(--green);
+    border: 1.5px solid var(--green);
+  }
+  .btn-outline:hover { background: var(--green-lt); }
+
+  /* ─── HERO ─── */
+  .hero {
+    min-height: 90vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: 4rem;
+    padding: 5rem 6vw 4rem;
+    position: relative;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -80px; right: -100px;
+    width: 600px; height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(201,146,42,.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--gold-lt);
+    color: var(--gold);
+    font-size: .8rem;
+    font-weight: 600;
+    padding: .4rem 1rem;
+    border-radius: 100px;
+    margin-bottom: 1.5rem;
+    border: 1px solid rgba(201,146,42,.3);
+  }
+
+  .hero-badge::before {
+    content: '';
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--gold);
+  }
+
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.4rem, 4.5vw, 3.6rem);
+    font-weight: 900;
+    line-height: 1.15;
+    letter-spacing: -0.03em;
+    color: var(--ink);
+    margin-bottom: 1.4rem;
+  }
+
+  h1 em {
+    font-style: normal;
+    color: var(--green);
+    position: relative;
+  }
+
+  h1 em::after {
+    content: '';
+    position: absolute;
+    bottom: -4px; left: 0; right: 0;
+    height: 3px;
+    background: var(--gold);
+    border-radius: 2px;
+  }
+
+  .hero-sub {
+    font-size: 1.1rem;
+    color: var(--ink-mid);
+    max-width: 480px;
+    margin-bottom: 2.5rem;
+    line-height: 1.7;
+  }
+
+  .hero-form {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 1.4rem;
+    flex-wrap: wrap;
+  }
+
+  .hero-form input {
+    flex: 1;
+    min-width: 220px;
+    padding: .75rem 1.1rem;
+    border-radius: var(--r);
+    border: 1.5px solid rgba(201,146,42,.3);
+    background: var(--white);
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: .95rem;
+    color: var(--ink);
+    outline: none;
+    transition: border-color .2s, box-shadow .2s;
+  }
+  .hero-form input:focus {
+    border-color: var(--gold);
+    box-shadow: 0 0 0 3px rgba(201,146,42,.15);
+  }
+  .hero-form input::placeholder { color: var(--ink-lt); }
+
+  .hero-note {
+    font-size: .8rem;
+    color: var(--ink-lt);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .hero-note svg { width: 14px; height: 14px; flex-shrink: 0; }
+
+  /* ─── HERO VISUAL ─── */
+  .hero-visual {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .card-stack {
+    position: relative;
+    width: 100%;
+    max-width: 400px;
+  }
+
+  .card-bg {
+    background: var(--green);
+    border-radius: var(--r-lg);
+    padding: 2rem;
+    color: var(--white);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .card-bg::before {
+    content: '';
+    position: absolute;
+    top: -40px; right: -40px;
+    width: 180px; height: 180px;
+    border-radius: 50%;
+    background: rgba(255,255,255,.06);
+  }
+
+  .card-bg::after {
+    content: '';
+    position: absolute;
+    bottom: -30px; left: -30px;
+    width: 140px; height: 140px;
+    border-radius: 50%;
+    background: rgba(201,146,42,.15);
+  }
+
+  .route-label {
+    font-size: .75rem;
+    font-weight: 600;
+    color: rgba(255,255,255,.5);
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    margin-bottom: .8rem;
+  }
+
+  .route-cities {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .city { font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 700; }
+  .city-sub { font-size: .75rem; color: rgba(255,255,255,.5); }
+
+  .route-line {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 0 .5rem;
+  }
+  .route-line div { flex: 1; height: 1px; background: rgba(255,255,255,.25); }
+  .plane-icon { font-size: 1.1rem; }
+
+  .gp-info {
+    background: rgba(255,255,255,.1);
+    border-radius: 10px;
+    padding: 1rem 1.1rem;
+    margin-bottom: 1rem;
+  }
+  .gp-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: .5rem; }
+  .gp-name { font-weight: 600; font-size: .95rem; }
+  .gp-badge {
+    font-size: .7rem;
+    background: var(--gold);
+    color: var(--white);
+    padding: 2px 9px;
+    border-radius: 100px;
+    font-weight: 600;
+  }
+  .gp-detail { display: flex; gap: 1rem; }
+  .gp-stat { font-size: .78rem; color: rgba(255,255,255,.65); }
+  .gp-stat strong { color: var(--white); font-weight: 600; display: block; font-size: .9rem; }
+
+  .card-float {
+    position: absolute;
+    background: var(--white);
+    border-radius: var(--r);
+    padding: .9rem 1.1rem;
+    box-shadow: 0 12px 40px rgba(0,0,0,.15);
+    display: flex;
+    align-items: center;
+    gap: .8rem;
+  }
+
+  .float-1 { bottom: -20px; left: -30px; }
+  .float-2 { top: -18px; right: -22px; }
+
+  .float-icon {
+    width: 38px; height: 38px;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.1rem;
+    flex-shrink: 0;
+  }
+  .float-icon.green { background: var(--green-lt); }
+  .float-icon.gold  { background: var(--gold-lt); }
+
+  .float-label { font-size: .7rem; color: var(--ink-lt); }
+  .float-val { font-size: .92rem; font-weight: 600; color: var(--ink); }
+
+  /* ─── LOGOS ─── */
+  .logos-bar {
+    padding: 2rem 6vw;
+    border-top: 1px solid rgba(0,0,0,.07);
+    border-bottom: 1px solid rgba(0,0,0,.07);
+    display: flex;
+    align-items: center;
+    gap: 3rem;
+    overflow: hidden;
+    background: var(--white);
+  }
+  .logos-label { font-size: .8rem; color: var(--ink-lt); white-space: nowrap; font-weight: 500; }
+  .logos-list { display: flex; gap: 2.5rem; align-items: center; flex-wrap: wrap; }
+  .logos-list span {
+    font-size: .85rem;
+    font-weight: 700;
+    letter-spacing: .04em;
+    color: var(--ink-mid);
+    opacity: .5;
+  }
+
+  /* ─── SECTION BASE ─── */
+  section { padding: 5rem 6vw; }
+
+  .section-label {
+    font-size: .8rem;
+    font-weight: 600;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: .8rem;
+  }
+
+  h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.8rem, 3vw, 2.6rem);
+    font-weight: 900;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    color: var(--ink);
+    margin-bottom: 1rem;
+  }
+
+  .section-sub {
+    font-size: 1rem;
+    color: var(--ink-mid);
+    max-width: 520px;
+    line-height: 1.7;
+  }
+
+  /* ─── HOW IT WORKS ─── */
+  .how-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-top: 3.5rem;
+  }
+
+  .how-card {
+    background: var(--white);
+    border-radius: var(--r-lg);
+    padding: 2rem;
+    border: 1px solid rgba(0,0,0,.07);
+    position: relative;
+    overflow: hidden;
+    transition: transform .2s, box-shadow .2s;
+  }
+  .how-card:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(0,0,0,.08); }
+
+  .how-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 3.5rem;
+    font-weight: 900;
+    color: var(--green-lt);
+    line-height: 1;
+    margin-bottom: .5rem;
+    position: relative;
+  }
+
+  .how-icon {
+    width: 48px; height: 48px;
+    border-radius: var(--r);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.4rem;
+    margin-bottom: 1.2rem;
+  }
+
+  .how-card h3 {
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin-bottom: .6rem;
+    color: var(--ink);
+  }
+
+  .how-card p { font-size: .9rem; color: var(--ink-mid); line-height: 1.65; }
+
+  /* ─── TWO SIDES ─── */
+  .sides { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 3.5rem; }
+
+  .side-card {
+    border-radius: var(--r-lg);
+    padding: 2.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .side-card.gp-side { background: var(--green); color: var(--white); }
+  .side-card.exp-side { background: var(--gold-lt); }
+
+  .side-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: .4rem;
+  }
+  .side-card.gp-side h3 { color: var(--white); }
+  .side-card.exp-side h3 { color: var(--ink); }
+
+  .side-role {
+    font-size: .8rem;
+    font-weight: 600;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+  }
+  .side-card.gp-side .side-role { color: rgba(255,255,255,.5); }
+  .side-card.exp-side .side-role { color: var(--gold); }
+
+  .side-list { list-style: none; display: flex; flex-direction: column; gap: .8rem; }
+  .side-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: .7rem;
+    font-size: .92rem;
+    line-height: 1.55;
+  }
+  .side-card.gp-side .side-list li { color: rgba(255,255,255,.85); }
+  .side-card.exp-side .side-list li { color: var(--ink-mid); }
+
+  .check {
+    width: 20px; height: 20px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: .7rem;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .gp-side .check  { background: rgba(255,255,255,.15); color: var(--white); }
+  .exp-side .check { background: rgba(201,146,42,.2);   color: var(--gold); }
+
+  /* ─── TRUST ─── */
+  .trust { background: var(--green); }
+  .trust h2 { color: var(--white); }
+  .trust .section-label { color: rgba(255,255,255,.5); }
+  .trust .section-sub { color: rgba(255,255,255,.7); }
+
+  .trust-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+    margin-top: 3rem;
+  }
+
+  .trust-card {
+    background: rgba(255,255,255,.08);
+    border-radius: var(--r-lg);
+    padding: 1.6rem;
+    border: 1px solid rgba(255,255,255,.1);
+  }
+
+  .trust-card .icon { font-size: 1.8rem; margin-bottom: 1rem; }
+  .trust-card h4 { font-size: .95rem; font-weight: 600; color: var(--white); margin-bottom: .4rem; }
+  .trust-card p { font-size: .83rem; color: rgba(255,255,255,.55); line-height: 1.6; }
+
+  /* ─── WAITLIST ─── */
+  .waitlist-inner {
+    background: var(--white);
+    border-radius: var(--r-lg);
+    padding: 4rem;
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto;
+    border: 1px solid rgba(0,0,0,.07);
+    box-shadow: 0 20px 60px rgba(0,0,0,.06);
+  }
+
+  .waitlist-inner .section-label { display: block; }
+  .waitlist-inner h2 { max-width: none; }
+  .waitlist-inner p { color: var(--ink-mid); font-size: 1rem; margin: 1rem 0 2rem; max-width: 420px; margin-left: auto; margin-right: auto; }
+
+  .waitlist-form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-width: 420px;
+    margin: 0 auto;
+  }
+
+  .waitlist-form input {
+    padding: .85rem 1.2rem;
+    border-radius: var(--r);
+    border: 1.5px solid rgba(0,0,0,.12);
+    background: var(--cream);
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: .95rem;
+    outline: none;
+    transition: border-color .2s;
+  }
+  .waitlist-form input:focus { border-color: var(--gold); }
+  .waitlist-form input::placeholder { color: var(--ink-lt); }
+
+  .select-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  select.role-select {
+    padding: .85rem 1.2rem;
+    border-radius: var(--r);
+    border: 1.5px solid rgba(0,0,0,.12);
+    background: var(--cream);
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: .95rem;
+    color: var(--ink);
+    outline: none;
+    appearance: none;
+    cursor: pointer;
+  }
+
+  /* ─── FOOTER ─── */
+  footer {
+    padding: 3rem 6vw;
+    border-top: 1px solid rgba(0,0,0,.07);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .footer-links { display: flex; gap: 2rem; }
+  .footer-links a { font-size: .85rem; color: var(--ink-lt); text-decoration: none; transition: color .2s; }
+  .footer-links a:hover { color: var(--ink); }
+
+  .footer-copy { font-size: .8rem; color: var(--ink-lt); }
+
+  /* ─── SUCCESS MESSAGE ─── */
+  .success-msg {
+    display: none;
+    padding: 1rem 1.2rem;
+    background: var(--green-lt);
+    border-radius: var(--r);
+    color: var(--green);
+    font-size: .9rem;
+    font-weight: 500;
+    text-align: center;
+    border: 1px solid rgba(46,107,72,.2);
+  }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 900px) {
+    .hero { grid-template-columns: 1fr; gap: 3rem; min-height: auto; }
+    .how-grid { grid-template-columns: 1fr; }
+    .sides { grid-template-columns: 1fr; }
+    .trust-grid { grid-template-columns: 1fr 1fr; }
+    nav ul { display: none; }
+    .hero-visual { display: none; }
+  }
+
+  @media (max-width: 600px) {
+    .trust-grid { grid-template-columns: 1fr; }
+    .waitlist-inner { padding: 2.5rem 1.5rem; }
+    .select-row { grid-template-columns: 1fr; }
+  }
+
+  /* ─── ANIMATIONS ─── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero-content > * {
+    animation: fadeUp .6s ease both;
+  }
+  .hero-content > *:nth-child(1) { animation-delay: .1s; }
+  .hero-content > *:nth-child(2) { animation-delay: .2s; }
+  .hero-content > *:nth-child(3) { animation-delay: .3s; }
+  .hero-content > *:nth-child(4) { animation-delay: .4s; }
+  .hero-content > *:nth-child(5) { animation-delay: .5s; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="logo">
+    <div class="logo-icon">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/>
+      </svg>
+    </div>
+    <span class="logo-text">GP<span>Angel</span></span>
+  </a>
+  <ul>
+    <li><a href="#how">Comment ça marche</a></li>
+    <li><a href="#gp">Pour les GP</a></li>
+    <li><a href="#securite">Sécurité</a></li>
+  </ul>
+  <a href="#waitlist" class="btn btn-primary">Rejoindre la liste d'attente</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-badge">🇸🇳 Lancement prévu — Diaspora Sénégalaise</div>
+    <h1>Envoyer des colis vers l'Afrique,<br/><em>en toute confiance</em></h1>
+    <p class="hero-sub">
+      GPAngel connecte les voyageurs qui ont des kilos disponibles avec les familles qui veulent envoyer des colis. Simple, sécurisé, assuré.
+    </p>
+    <div class="hero-form">
+      <input type="email" id="hero-email" placeholder="Votre adresse email" />
+      <button class="btn btn-gold" onclick="submitHero()">Je veux être notifié →</button>
+    </div>
+    <p class="hero-note">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/></svg>
+      Aucun spam. On vous prévient uniquement à l'ouverture de la plateforme.
+    </p>
+    <div class="success-msg" id="hero-success">✓ Parfait ! Vous serez parmi les premiers à être notifiés.</div>
+  </div>
+
+  <div class="hero-visual">
+    <div class="card-stack">
+      <div class="card-bg">
+        <div class="route-label">Trajet disponible</div>
+        <div class="route-cities">
+          <div>
+            <div class="city">Paris</div>
+            <div class="city-sub">CDG • 14 mars</div>
+          </div>
+          <div class="route-line">
+            <div></div>
+            <span class="plane-icon">✈️</span>
+            <div></div>
+          </div>
+          <div>
+            <div class="city">Dakar</div>
+            <div class="city-sub">DSS • 14 mars</div>
+          </div>
+        </div>
+        <div class="gp-info">
+          <div class="gp-header">
+            <span class="gp-name">Aminata D.</span>
+            <span class="gp-badge">⭐ GP vérifié</span>
+          </div>
+          <div class="gp-detail">
+            <div class="gp-stat"><strong>12 kg</strong>disponibles</div>
+            <div class="gp-stat"><strong>8 €/kg</strong>prix unitaire</div>
+            <div class="gp-stat"><strong>47</strong>avis positifs</div>
+          </div>
+        </div>
+        <button class="btn btn-gold" style="width:100%; justify-content:center;">Réserver des kilos →</button>
+      </div>
+
+      <div class="card-float float-1">
+        <div class="float-icon green">🔒</div>
+        <div>
+          <div class="float-label">Paiement sécurisé</div>
+          <div class="float-val">Libéré à la livraison</div>
+        </div>
+      </div>
+
+      <div class="card-float float-2">
+        <div class="float-icon gold">📦</div>
+        <div>
+          <div class="float-label">Colis assuré</div>
+          <div class="float-val">Couverture incluse</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LOGOS BAR -->
+<div class="logos-bar">
+  <span class="logos-label">Ils feront confiance à GPAngel</span>
+  <div class="logos-list">
+    <span>SÉNÉGAL</span>
+    <span>CÔTE D'IVOIRE</span>
+    <span>MALI</span>
+    <span>CAMEROUN</span>
+    <span>FRANCE</span>
+    <span>BELGIQUE</span>
+    <span>CANADA</span>
+  </div>
+</div>
+
+<!-- HOW IT WORKS -->
+<section id="how">
+  <div class="section-label">Comment ça marche</div>
+  <h2>Aussi simple que d'envoyer un message</h2>
+  <p class="section-sub">Fini les groupes WhatsApp chaotiques. GPAngel centralise tout en un seul endroit.</p>
+
+  <div class="how-grid">
+    <div class="how-card">
+      <div class="how-num">01</div>
+      <div class="how-icon" style="background:#D6EBD9;">✈️</div>
+      <h3>Un voyageur publie son trajet</h3>
+      <p>Le GP renseigne sa destination, sa date de départ, ses kilos disponibles et son prix par kilo. Vérification d'identité incluse.</p>
+    </div>
+    <div class="how-card">
+      <div class="how-num">02</div>
+      <div class="how-icon" style="background:#F9EDD3;">🔍</div>
+      <h3>L'expéditeur trouve et réserve</h3>
+      <p>Recherche par destination et par date. Consultation des avis, réservation des kilos et paiement sécurisé en quelques clics.</p>
+    </div>
+    <div class="how-card">
+      <div class="how-num">03</div>
+      <div class="how-icon" style="background:#FAE8E4;">🎉</div>
+      <h3>La famille reçoit, le paiement est libéré</h3>
+      <p>Le destinataire confirme la réception sur l'app. L'argent est automatiquement transféré au voyageur. Tout le monde est gagnant.</p>
+    </div>
+  </div>
+</section>
+
+<!-- TWO SIDES -->
+<section id="gp" style="background: var(--white);">
+  <div class="section-label">Pour qui ?</div>
+  <h2>Une plateforme, deux communautés</h2>
+  <p class="section-sub">Que vous soyez voyageur avec des kilos à monétiser ou famille souhaitant envoyer un colis, GPAngel a été conçu pour vous.</p>
+
+  <div class="sides">
+    <div class="side-card gp-side">
+      <div class="side-role">✈️ Vous voyagez</div>
+      <h3>Monetisez vos kilos inutilisés</h3>
+      <br/>
+      <ul class="side-list">
+        <li><div class="check">✓</div>Publiez votre trajet en 2 minutes</li>
+        <li><div class="check">✓</div>Recevez des demandes de personnes vérifiées</li>
+        <li><div class="check">✓</div>Paiement garanti avant le départ</li>
+        <li><div class="check">✓</div>Construisez votre réputation avec les avis</li>
+        <li><div class="check">✓</div>Badge "GP Vérifié" pour inspirer confiance</li>
+        <li><div class="check">✓</div>Gagnez jusqu'à 200€ par voyage</li>
+      </ul>
+    </div>
+    <div class="side-card exp-side">
+      <div class="side-role">📦 Vous envoyez</div>
+      <h3>Envoyer à votre famille en toute sérénité</h3>
+      <br/>
+      <ul class="side-list">
+        <li><div class="check">✓</div>Trouvez un GP par destination et par date</li>
+        <li><div class="check">✓</div>Consultez les avis et choisissez en confiance</li>
+        <li><div class="check">✓</div>Paiement bloqué jusqu'à la livraison confirmée</li>
+        <li><div class="check">✓</div>Colis assuré en cas de perte ou dommage</li>
+        <li><div class="check">✓</div>Suivi en temps réel de votre envoi</li>
+        <li><div class="check">✓</div>Tarifs bien plus bas qu'un transporteur classique</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- TRUST -->
+<section class="trust" id="securite">
+  <div class="section-label">Confiance & Sécurité</div>
+  <h2>Votre confiance est notre priorité</h2>
+  <p class="section-sub">GPAngel a été conçu pour éliminer tous les risques qui existent dans les groupes WhatsApp.</p>
+
+  <div class="trust-grid">
+    <div class="trust-card">
+      <div class="icon">🪪</div>
+      <h4>Identité vérifiée</h4>
+      <p>Chaque GP passe par une vérification d'identité avant de pouvoir publier un trajet.</p>
+    </div>
+    <div class="trust-card">
+      <div class="icon">🔐</div>
+      <h4>Paiement séquestre</h4>
+      <p>L'argent est bloqué sur un compte séquestre et libéré uniquement à la confirmation de livraison.</p>
+    </div>
+    <div class="trust-card">
+      <div class="icon">🛡️</div>
+      <h4>Assurance colis</h4>
+      <p>Chaque envoi est couvert par une assurance en cas de perte, vol ou dommage durant le transport.</p>
+    </div>
+    <div class="trust-card">
+      <div class="icon">⭐</div>
+      <h4>Système d'avis</h4>
+      <p>Les évaluations bidirectionnelles créent une réputation transparente et une vraie responsabilisation.</p>
+    </div>
+  </div>
+</section>
+
+<!-- WAITLIST -->
+<section id="waitlist" style="background: var(--cream);">
+  <div class="waitlist-inner">
+    <span class="section-label">Accès anticipé</span>
+    <h2>Soyez parmi les premiers</h2>
+    <p>GPAngel ouvre bientôt sur la route Paris → Dakar. Inscrivez-vous pour accéder en avant-première et bénéficier de 0% de commission les 3 premiers mois.</p>
+
+    <form
+      name="gpangel-waitlist"
+      method="POST"
+      data-netlify="true"
+      netlify-honeypot="bot-field"
+      class="waitlist-form"
+      id="wl-form"
+    >
+      <input type="hidden" name="form-name" value="gpangel-waitlist" />
+      <input type="text" name="bot-field" style="display:none" />
+
+      <input type="text" name="prenom" id="wl-name" placeholder="Votre prénom" required />
+      <input type="email" name="email" id="wl-email" placeholder="Votre adresse email" required />
+      <div class="select-row">
+        <select class="role-select" name="role" id="wl-role" required>
+          <option value="" disabled selected>Je suis…</option>
+          <option value="gp">Un voyageur (GP)</option>
+          <option value="exp">Un expéditeur</option>
+          <option value="both">Les deux</option>
+        </select>
+        <select class="role-select" name="route" id="wl-route" required>
+          <option value="" disabled selected>Ma route</option>
+          <option>Paris → Dakar</option>
+          <option>Lyon → Dakar</option>
+          <option>Bruxelles → Dakar</option>
+          <option>Montréal → Dakar</option>
+          <option>Autre</option>
+        </select>
+      </div>
+      <button type="submit" class="btn btn-primary" style="justify-content:center; padding:1rem;">
+        Rejoindre la liste d'attente →
+      </button>
+      <div class="success-msg" id="wl-success">✓ Bienvenue dans la communauté GPAngel ! Vous serez notifié en priorité.</div>
+    </form>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <a href="#" class="logo" style="text-decoration:none;">
+    <div class="logo-icon">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/>
+      </svg>
+    </div>
+    <span class="logo-text">GP<span>Angel</span></span>
+  </a>
+  <div class="footer-links">
+    <a href="#">Mentions légales</a>
+    <a href="#">Confidentialité</a>
+    <a href="#">Contact</a>
+  </div>
+  <p class="footer-copy">© 2025 GPAngel — Tous droits réservés</p>
+</footer>
+
+<script>
+  function submitHero() {
+    const email = document.getElementById('hero-email').value;
+    if (!email || !email.includes('@')) {
+      document.getElementById('hero-email').style.borderColor = '#C44C1E';
+      return;
+    }
+    document.getElementById('hero-email').style.display = 'none';
+    document.querySelector('.hero-form .btn-gold').style.display = 'none';
+    document.getElementById('hero-success').style.display = 'block';
+  }
+
+  const wlForm = document.getElementById('wl-form');
+  if (wlForm) {
+    wlForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const data = new FormData(wlForm);
+      try {
+        await fetch('/', { method: 'POST', body: new URLSearchParams(data).toString(), headers: { 'Content-Type': 'application/x-www-form-urlencoded' } });
+        wlForm.querySelector('button[type="submit"]').style.display = 'none';
+        document.getElementById('wl-success').style.display = 'block';
+      } catch {
+        alert('Une erreur est survenue. Veuillez réessayer.');
+      }
+    });
+  }
+
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const target = document.querySelector(a.getAttribute('href'));
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+</script>
+</body>
+</html>
