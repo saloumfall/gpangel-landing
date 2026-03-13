@@ -670,15 +670,7 @@
     <p class="hero-sub">
       GPAngel connecte les voyageurs qui ont des kilos disponibles avec les familles qui veulent envoyer des colis. Simple, sécurisé, assuré.
     </p>
-    <div class="hero-form">
-      <input type="email" id="hero-email" placeholder="Votre adresse email" />
-      <button class="btn btn-gold" onclick="submitHero()">Je veux être notifié →</button>
-    </div>
-    <p class="hero-note">
-      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/></svg>
-      Aucun spam. On vous prévient uniquement à l'ouverture de la plateforme.
-    </p>
-    <div class="success-msg" id="hero-success">✓ Parfait ! Vous serez parmi les premiers à être notifiés.</div>
+    <a href="#waitlist" class="btn btn-gold">Je veux être notifié →</a>
   </div>
 
   <div class="hero-visual">
@@ -902,18 +894,7 @@
 </footer>
 
 <script>
-  function submitHero() {
-    const email = document.getElementById('hero-email').value;
-    if (!email || !email.includes('@')) {
-      document.getElementById('hero-email').style.borderColor = '#C44C1E';
-      return;
-    }
-    document.getElementById('hero-email').style.display = 'none';
-    document.querySelector('.hero-form .btn-gold').style.display = 'none';
-    document.getElementById('hero-success').style.display = 'block';
-  }
-
-  const wlForm = document.getElementById('wl-form');
+const wlForm = document.getElementById('wl-form');
   if (wlForm) {
     wlForm.addEventListener('submit', async (e) => {
       e.preventDefault();
